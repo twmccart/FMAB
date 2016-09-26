@@ -4,7 +4,7 @@ import sys
 
 # Function to generate initial (marginal) probabilities from conditional probabilities
 def generate_init_prob(cond_prob) :
-    initial=dict()
+    initial=dict('A', 0; 'T', 0; 'C', 0; 'G', 0)
 
     ### Insert your code here
     ### Goal : get marginal probabilities for A,C,T,G
