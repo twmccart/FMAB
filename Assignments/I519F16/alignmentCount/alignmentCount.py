@@ -7,17 +7,18 @@ import numpy as np
 
 def alignCount_allowDoublegap(n,m) :
     # initial matrix full of zeros
-    mat = np.zeros([n+1,m+1],dtype=int) 
+    matrix = np.zeros([n+1,m+1],dtype=int) 
     
     # fill first row and column with ones
-    mat[0,:] = np.ones(m+1)
-    mat[:,0] = np.ones(n+1)
+    matrix[0,:] = np.ones(m+1)
+    matrix[:,0] = np.ones(n+1)
 
     ### Insert your code here
     ### dynamical programming loop to fill the rest of the matrix
+    
 
     # return the right bottom corner
-    return mat[-1][-1]
+    return matrix[-1][-1]
 
 
 # Function to calculate number of possible alignments
