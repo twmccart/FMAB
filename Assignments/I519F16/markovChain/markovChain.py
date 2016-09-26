@@ -4,7 +4,7 @@ import sys
 
 # Function to generate initial (marginal) probabilities from conditional probabilities
 def generate_init_prob(cond_prob) :
-    initial=dict('A', 0; 'T', 0; 'C', 0; 'G', 0)
+    initial={'A': 0, 'T': 0, 'C': 0, 'G': 0}
 
     ### Insert your code here
     ### Goal : get marginal probabilities for A,C,T,G
@@ -25,12 +25,17 @@ def generate_conditional_probabilities_dict(cond_prob):
             subkmer_probability_sums[subkmer] = cond_prob[kmer]
     for kmer in cond_prob:
         subkmer = kmer[:-1]
+        #print "subkmer: ", subkmer
         new_nucleotide = kmer[-1:]
+        #print "new_ nucleotide: ", new_nucleotide
         if subkmer in usable_conditional_probabilities:
-            usable_conditional_probabilities[subkmer[new_nucleotide]] = cond_prob[kmer]/subkmer_probability_sums[subkmer]
+            #print "Usable_conditional_probabilities[subkmer]: ", usable_conditional_probabilities[subkmer]
+            usable_conditional_probabilities[subkmer][new_nucleotide] = cond_prob[kmer]/subkmer_probability_sums[subkmer]
         else:
             usable_conditional_probabilities[subkmer] = {}
-            usable_conditional_probabilities[subkmer[new_nucleotide]] = cond_prob[kmer]/subkmer_probability_sums[subkmer]
+            #print "Usable_conditional_probabilities[subkmer]: ", usable_conditional_probabilities[subkmer]
+            usable_conditional_probabilities[subkmer][new_nucleotide] = cond_prob[kmer]/subkmer_probability_sums[subkmer]
+    return usable_conditional_probabilities
 
 def generate_markov(length, cond_prob, order=1) :
 
@@ -59,6 +64,7 @@ def generate_markov(length, cond_prob, order=1) :
     ### Insert your code here
     ### Goal 2 : generate rest of the sequence
     useful_probabilities=generate_conditional_probabilities_dict(cond_prob)
+    #print "useful_probabilities: ", useful_probabilities
     for i in range(length-1) :
         subkmer=sequence[-order:]
         relevant_probabilities = useful_probabilities[subkmer]
@@ -66,11 +72,11 @@ def generate_markov(length, cond_prob, order=1) :
         dice = random()
         limit=0
         # We divide [0,1) interval according to probabilities of each nucleotide
-        for nuc in useful_probabilities :
-            limit += useful_probabilities[nuc]
+        for nuc in relevant_probabilities :
+            limit += relevant_probabilities[nuc]
             # We add the letter that dice hits
             if dice<limit :
-                seq_string += nuc
+                sequence += nuc
                 limit = 0
                 # Roll another dice for the next nucleotide
                 break
@@ -90,10 +96,12 @@ if __name__ == '__main__' :
     args = parser.parse_args()
 
     # Read model parameters from stdin
-    cond_prob = dict()
+    cond_prob = {}
     for line in sys.stdin :
         kmer, prob = line.strip().split()
         cond_prob[kmer] = float(prob)
+    #print "Input cond_prob: "
+    #print cond_prob
 
     # Print n random sequences to stdout
     for i in range(args.number) :

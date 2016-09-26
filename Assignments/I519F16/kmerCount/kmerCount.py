@@ -39,7 +39,7 @@ def normalize_counts(kmer_count, k=2) :
     subkmers_iterable = itertools.product('ATCG', repeat=(k-1))
     for subkmer in subkmers_iterable:
         subkmer_count[''.join(subkmer)] = 0
-    print "subkmer_count: ", subkmer_count
+    #print "subkmer_count: ", subkmer_count
 
     for key in kmer_count.keys():
         #print "key: ", key
@@ -47,11 +47,11 @@ def normalize_counts(kmer_count, k=2) :
         #print "before subkmer_count[key[:k-1]] : ", subkmer_count[key[:k-1]]
         ## Front bit of each kmer is used as the key for a subkmer_count
         subkmer_count[key[:k-1]] += kmer_count[key]
-    print "subkmer_count: ", subkmer_count
+    #print "subkmer_count: ", subkmer_count
     for key in kmer_count.keys():
-        print "key: ", key
-        print "kmer_count[key]: ", kmer_count[key]
-        print "subkmer_count[key[:k-1]]: ", subkmer_count[key[:k-1]]
+        #print "key: ", key
+        #print "kmer_count[key]: ", kmer_count[key]
+        #print "subkmer_count[key[:k-1]]: ", subkmer_count[key[:k-1]]
         kmer_prob[key] = (float(kmer_count[key])/subkmer_count[key[:k-1]])
     
     return kmer_prob
