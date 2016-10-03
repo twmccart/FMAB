@@ -14,7 +14,9 @@ def generate_init_prob(cond_prob) :
 
     return initial
     
-def generate_conditional_probabilities_dict(cond_prob):
+def generate_conditional_probabilities_dict(cond_prob, order):
+    if order == 0:
+        return cond_prob
     subkmer_probability_sums={}
     usable_conditional_probabilities={}
     for kmer in cond_prob:
@@ -63,7 +65,7 @@ def generate_markov(length, cond_prob, order=1) :
 
     ### Insert your code here
     ### Goal 2 : generate rest of the sequence
-    useful_probabilities=generate_conditional_probabilities_dict(cond_prob)
+    useful_probabilities=generate_conditional_probabilities_dict(cond_prob, order)
     #print "useful_probabilities: ", useful_probabilities
     for i in range(length-1) :
         subkmer=sequence[-order:]
