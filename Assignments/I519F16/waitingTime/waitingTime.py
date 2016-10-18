@@ -20,6 +20,20 @@ def waiting_time(composition, pattern) :
     ### Your code goes in here
     ### Goal : Generate a random sequence until the given pattern comes up
     ### Hint : It is a single while loop.
+    while sequence[-pattern_size:] != pattern:
+        # Get a random number in [0,1)
+        dice = random()
+        limit=0
+        # We divide [0,1) interval according to probabilities of each nucleotide
+        for letter in composition:
+            limit += composition[letter]
+            # We add the letter that dice hits
+            if dice<limit:
+                sequence += letter
+                limit = 0
+                # Roll another dice for the next nucleotide
+                break
+        
 
     # Return length of the generated sequence
     return len(sequence)
