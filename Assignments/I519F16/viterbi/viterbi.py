@@ -59,13 +59,13 @@ def viterbi(initial, transition, emission, observed) :
 if __name__ == '__main__' :
 
     # initial probabilities of (F)air and (B)iased coins
-    initial = {'F':0.5, 'B':0.5}
+    initial = {'F':(1.0/3), 'B':(1.0/3), 'A':(1.0/3)}
 
     # transition probabilities btw (F)air and (B)iased coins
-    transition = {'F':{'F':0.8, 'B':0.2}, 'B':{'F':0.2, 'B':0.8} }
+    transition = {'F':{'F':0.4, 'B':0.3, 'A':0.3}, 'B':{'F':0.3, 'B':0.4, 'A':0.3}, 'A':{'F':0.3, 'A':0.4, 'B':0.3} }
 
     # emmision probabilites from (F)air and (B)iased coins
-    emission = {'F':{'H':0.5, 'T':0.5}, 'B':{'H':0.2, 'T':0.8} }
+    emission = {'F':{'H':0.5, 'T':0.5}, 'B':{'H':0.4, 'T':0.6}, 'A':{'H':0.6, 'T':0.4} }
 
     # observed sequence is the only input to the program
     sequence = argv[1]
